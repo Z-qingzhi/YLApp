@@ -5,7 +5,7 @@
        <md-button class="md-icon-button" @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-        <span class="md-title">My Title</span>
+        <span class="md-title">My Title11</span>
       </md-app-toolbar>
 
       <md-app-drawer md-permanent="full">
