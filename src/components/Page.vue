@@ -15,44 +15,19 @@
 
         <md-list>
           <md-list :md-expand-single="expandSingle">
-        <md-list-item md-expand :md-expanded.sync="expandNews">
-          <md-icon>whatshot</md-icon>
-          <span class="md-list-item-text">News</span>
+
+        <md-list-item md-expand v-for="(item,index) in router" v-if="item.hidden != true">
+          <md-icon>{{item.iconCls}}</md-icon>
+          <span class="md-list-item-text">{{item.name}}</span>
 
           <md-list slot="md-expand">
-            <md-list-item class="md-inset">World</md-list-item>
-            <md-list-item class="md-inset">Europe</md-list-item>
-            <md-list-item class="md-inset">South America</md-list-item>
+            <md-list-item class="md-inset" v-for="(item2,index2) in item.children"><a href="#/main" title="">{{item2.name}}</a></md-list-item>
           </md-list>
         </md-list-item>
 
-        <md-list-item md-expand>
-          <md-icon>videogame_asset</md-icon>
-          <span class="md-list-item-text">Games</span>
+     
 
-          <md-list slot="md-expand">
-            <md-list-item class="md-inset">Console</md-list-item>
-            <md-list-item class="md-inset">PC</md-list-item>
-            <md-list-item class="md-inset">Phone</md-list-item>
-          </md-list>
-        </md-list-item>
 
-        <md-list-item md-expand>
-          <md-icon>video_library</md-icon>
-          <span class="md-list-item-text">Video</span>
-
-          <md-list slot="md-expand">
-            <md-list-item class="md-inset">Humor</md-list-item>
-            <md-list-item class="md-inset">Music</md-list-item>
-            <md-list-item class="md-inset">Movies</md-list-item>
-            <md-list-item class="md-inset">TV Shows</md-list-item>
-          </md-list>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>shopping_basket</md-icon>
-          <span class="md-list-item-text">Shop</span>
-        </md-list-item>
       </md-list>
         </md-list>
       </md-app-drawer>
@@ -60,9 +35,13 @@
 
 
       <md-app-content>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.
+          <div id="mian">
+            <router-view></router-view>
+          </div>
       </md-app-content>
     </md-app>
+
+
     <md-drawer :md-active.sync="showNavigation" v-if="NavState==1">
       <md-toolbar class="md-transparent" md-elevation="0">
         <span class="md-title">My App name</span>
@@ -70,47 +49,22 @@
 
       <md-list>
         <md-list :md-expand-single="expandSingle">
-        <md-list-item md-expand :md-expanded.sync="expandNews">
-          <md-icon>whatshot</md-icon>
-          <span class="md-list-item-text">News</span>
 
-          <md-list slot="md-expand">
-            <md-list-item class="md-inset">World</md-list-item>
-            <md-list-item class="md-inset">Europe</md-list-item>
-            <md-list-item class="md-inset">South America</md-list-item>
-          </md-list>
-        </md-list-item>
 
-        <md-list-item md-expand>
-          <md-icon>videogame_asset</md-icon>
-          <span class="md-list-item-text">Games</span>
+           <md-list-item md-expand v-for="(item,index) in router" v-if="item.hidden != true">
+            <md-icon>{{item.iconCls}}</md-icon>
+            <span class="md-list-item-text">{{item.name}}</span>
 
-          <md-list slot="md-expand">
-            <md-list-item class="md-inset">Console</md-list-item>
-            <md-list-item class="md-inset">PC</md-list-item>
-            <md-list-item class="md-inset">Phone</md-list-item>
-          </md-list>
-        </md-list-item>
+            <md-list slot="md-expand">
+              <md-list-item class="md-inset" v-for="(item2,index2) in item.children">{{item2.name}}</md-list-item>
+            </md-list>
+          </md-list-item>
 
-        <md-list-item md-expand>
-          <md-icon>video_library</md-icon>
-          <span class="md-list-item-text">Video</span>
-
-          <md-list slot="md-expand">
-            <md-list-item class="md-inset">Humor</md-list-item>
-            <md-list-item class="md-inset">Music</md-list-item>
-            <md-list-item class="md-inset">Movies</md-list-item>
-            <md-list-item class="md-inset">TV Shows</md-list-item>
-          </md-list>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>shopping_basket</md-icon>
-          <span class="md-list-item-text">Shop</span>
-        </md-list-item>
       </md-list>
       </md-list>
     </md-drawer>
+
+
   </div>
 </template>
 
@@ -122,7 +76,8 @@ import router from '../router.js'
   var vum = {
     name: 'Temporary',
     created:function(){
-      console.log(router)
+      this.router = router;
+      // this.$router.push('/login');
       var This = this;
       function checkScreen(){
         var a = $(window).width();
@@ -142,7 +97,8 @@ import router from '../router.js'
       showSidepanel: false,
       NavState:0,
       expandNews: false,
-      expandSingle: true
+      expandSingle: true,
+      router:'',
     }),
     methods:{
       GOhome:function(){
@@ -160,7 +116,7 @@ import router from '../router.js'
     height:100%;
   }
   .md-drawer[data-v-5e693dc2]{
-    
+    width:300px;
   }
   .md-app {
     min-height: 100%;
